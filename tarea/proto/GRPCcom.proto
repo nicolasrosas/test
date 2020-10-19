@@ -1,0 +1,85 @@
+syntax = "proto3";
+package proto;
+
+
+message ClientRequest{
+
+    string IdProducto = 1;
+    string Producto = 2;
+    int32 Valor = 3;
+    string Origen = 4;
+    string Destino =5;
+    string Prioritario = 6;
+    string Convenio = 7;
+    
+}
+
+message TrackCode{
+
+    string Code =1;
+
+}
+
+message OrderStatus{
+
+    string Estado =1;
+    int32 Intentos =2;
+
+}
+
+message RespuestaCamion{
+
+    string Idcamion = 1;
+
+}
+/*
+message ConsultaCamion{
+
+    string IdSeguimiento = 1;
+    string IdCamion = 2;
+
+}
+*/
+message Package {
+
+	string IdPaquete = 1;
+	string Seguimiento = 2;
+	string Tipo = 3;
+	int32 Valor = 4;
+	int32 Intentos = 5;
+    string Estado = 6;
+    string Origen =7;
+    string Destino =8;
+
+}
+
+message PaqueteEntregado {
+
+	string IdPaquete = 1;
+	string Tipo = 3;
+	int32 Valor = 4;
+	int32 Intentos = 5;
+    string Timestamp =7;
+    string IdCamion =8;
+    string estado =9;
+    string seguimiento =10;
+}
+
+message Empty {}
+
+service LogisticaService {
+
+    rpc Ordenar(ClientRequest) returns (TrackCode);
+    rpc EstadoPedido(TrackCode) returns (OrderStatus);
+    rpc InformarEntrega(PaqueteEntregado) returns (Empty);
+
+}
+
+service CamionesService {
+
+    rpc AsignarC1(Package) returns (RespuestaCamion);
+    rpc AsignarC2(Package) returns (RespuestaCamion);
+    rpc AsignarC3(Package) returns (RespuestaCamion);
+
+}
+
